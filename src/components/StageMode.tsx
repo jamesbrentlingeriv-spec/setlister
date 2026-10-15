@@ -143,6 +143,22 @@ export const StageMode: React.FC<StageModeProps> = ({
     return transposeChordPro(currentSong.content, semitones, preferSharps);
   }, [currentSong.content, semitones, preferSharps]);
 
+  // Transposed song text lines with leading directives and empty lines stripped
+  // so the first musical content appears immediately at the top without dead space
+  const contentLines = useMemo(() => {
+    const rawLines = transposedContent.split('\n');
+    let startIdx = 0;
+    while (startIdx < rawLines.length) {
+      const trimmed = rawLines[startIdx].trim();
+      if (!trimmed || (trimmed.startsWith('{') && !trimmed.toLowerCase().startsWith('{comment:'))) {
+        startIdx++;
+      } else {
+        break;
+      }
+    }
+    return rawLines.slice(startIdx);
+  }, [transposedContent]);
+
   // Display key
   const displayKey = useMemo(() => {
     if (!currentSong.originalKey) return '';
@@ -332,8 +348,10 @@ export const StageMode: React.FC<StageModeProps> = ({
     >
       {/* Top HUD (Distraction-Free Auto-Hiding with Phone Safe Area Padding) */}
       <div 
-        className={`transition-all duration-300 ease-in-out border-b border-neutral-900 bg-black/95 backdrop-blur-md px-4 pt-[max(2.5rem,calc(env(safe-area-inset-top,0px)+0.75rem))] pb-2.5 z-20 ${
-          isControlsVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0 pointer-events-none'
+        className={`transition-all duration-300 ease-in-out bg-black/95 backdrop-blur-md px-4 z-20 shrink-0 ${
+          isControlsVisible 
+            ? 'block opacity-100 translate-y-0 pt-[max(2.5rem,calc(env(safe-area-inset-top,0px)+0.75rem))] pb-2.5 border-b border-neutral-900' 
+            : 'hidden'
         }`}
       >
         <div className="flex flex-wrap items-center justify-between gap-3 max-w-7xl mx-auto pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)]">
@@ -474,7 +492,7 @@ export const StageMode: React.FC<StageModeProps> = ({
                 onClick={() => setIsAudioDeckOpen(prev => !prev)}
                 className={`touch-target p-2 rounded-lg border transition-all ${
                   isAudioDeckOpen 
-                    ? 'rainbow-bg text-white border-transparent' 
+                    ? 'bg-blue-600 text-white border-transparent' 
                     : 'bg-neutral-900 text-neutral-300 border-neutral-800 hover:bg-neutral-800'
                 }`}
                 title="Toggle Reference Audio Deck"
@@ -489,7 +507,7 @@ export const StageMode: React.FC<StageModeProps> = ({
               onClick={toggleFullscreen}
               className={`touch-target p-2.5 rounded-lg border transition-colors ${
                 isActuallyFullscreen 
-                  ? 'rainbow-bg text-white border-transparent shadow-md' 
+                  ? 'bg-blue-600 text-white border-transparent shadow-md shadow-blue-500/25' 
                   : 'bg-neutral-900 hover:bg-neutral-800 text-neutral-300 hover:text-white border-neutral-800'
               }`}
               title={isActuallyFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'}
@@ -500,9 +518,12 @@ export const StageMode: React.FC<StageModeProps> = ({
             {/* Hide HUD Button */}
             <button
               type="button"
-              onClick={() => setIsControlsVisible(false)}
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsControlsVisible(false);
+              }}
               className="touch-target p-2.5 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-neutral-400 hover:text-white transition-colors"
-              title="Hide Navigation Chrome (Tap screen anywhere to restore)"
+              title="Hide Title Box (Tap screen anywhere to restore)"
             >
               <EyeOff className="w-5 h-5" />
             </button>
@@ -511,9 +532,9 @@ export const StageMode: React.FC<StageModeProps> = ({
 
         {/* Setlist Item Notes Banner */}
         {(currentSetlistItem?.notes || currentSong.notes) && (
-          <div className="mt-2 text-xs py-1.5 px-3 rounded-lg bg-neutral-900 border-l-4 border-l-pink-500 border border-neutral-800 text-neutral-200 flex items-center justify-between">
+          <div className="mt-2 text-xs py-1.5 px-3 rounded-lg bg-neutral-900 border-l-4 border-l-blue-500 border border-neutral-800 text-neutral-200 flex items-center justify-between">
             <div>
-              <span className="font-bold uppercase tracking-wider rainbow-text mr-2">Stage Cue:</span>
+              <span className="font-bold uppercase tracking-wider text-blue-400 mr-2">Stage Cue:</span>
               {currentSetlistItem?.notes || currentSong.notes}
             </div>
           </div>
@@ -542,11 +563,15 @@ export const StageMode: React.FC<StageModeProps> = ({
       {/* Main Distraction-Free Scroll Container with Safe Area Insets */}
       <div 
         ref={scrollContainerRef}
-        className="flex-1 overflow-y-auto px-4 md:px-12 py-8 scroll-smooth pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))]"
+        className={`flex-1 overflow-y-auto px-4 md:px-12 scroll-smooth pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))] ${
+          isControlsVisible 
+            ? 'py-6' 
+            : 'pt-[max(0.75rem,calc(env(safe-area-inset-top,0px)+0.25rem))] pb-28'
+        }`}
         style={{ scrollBehavior: isScrolling ? 'auto' : 'smooth' }}
       >
         <div className="max-w-4xl mx-auto space-y-6 pb-64">
-          {transposedContent.split('\n').map((line, idx) => {
+          {contentLines.map((line, idx) => {
             const parsed = parseChordProLine(line);
 
             if (parsed.type === 'blank') {
@@ -612,7 +637,7 @@ export const StageMode: React.FC<StageModeProps> = ({
         </div>
       </div>
 
-      {/* Floating Unhide Pill (when HUD is hidden) with Rainbow Accent */}
+      {/* Floating Unhide Pill (when HUD is hidden) with Blue Accent */}
       {!isControlsVisible && (
         <button
           type="button"
@@ -620,12 +645,11 @@ export const StageMode: React.FC<StageModeProps> = ({
             e.stopPropagation();
             setIsControlsVisible(true);
           }}
-          className="fixed top-4 right-4 z-40 touch-target flex items-center gap-2 px-3.5 py-2 rounded-full bg-black/90 backdrop-blur border border-neutral-700 text-white shadow-2xl hover:scale-105 active:scale-95 transition-all rainbow-border-glow"
-          title="Restore Navigation Controls"
+          className="fixed top-[max(0.75rem,env(safe-area-inset-top))] right-[max(0.75rem,env(safe-area-inset-right))] z-40 touch-target flex items-center gap-2 px-3.5 py-2 rounded-full bg-neutral-900/95 backdrop-blur-md border border-blue-500/50 text-white shadow-2xl hover:scale-105 active:scale-95 transition-all shadow-blue-500/25"
+          title="Restore Title Box & Stage Controls"
         >
-          <Sparkles className="w-4 h-4 text-pink-400 animate-spin" style={{ animationDuration: '4s' }} />
-          <Eye className="w-4 h-4 text-emerald-400" />
-          <span className="text-xs font-bold rainbow-text">Controls</span>
+          <Eye className="w-4 h-4 text-blue-400" />
+          <span className="text-xs font-bold text-blue-400">Controls</span>
         </button>
       )}
 
@@ -739,7 +763,7 @@ export const StageMode: React.FC<StageModeProps> = ({
               onClick={() => setIsPacingMode(prev => !prev)}
               className={`touch-target px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all ${
                 isPacingMode 
-                  ? 'rainbow-bg text-white shadow-md' 
+                  ? 'bg-blue-600 text-white shadow-md shadow-blue-500/25' 
                   : 'bg-neutral-900 text-neutral-400 hover:text-white hover:bg-neutral-800'
               }`}
               title="Pacing Mode: Auto-calculates scroll speed to finish exactly when the song ends"
@@ -752,7 +776,7 @@ export const StageMode: React.FC<StageModeProps> = ({
             <button
               type="button"
               onClick={handleSaveDefaultSpeed}
-              className="touch-target p-2 text-neutral-500 hover:text-pink-400 transition-colors"
+              className="touch-target p-2 text-neutral-500 hover:text-blue-400 transition-colors"
               title="Save current speed as default for this song"
             >
               <Check className="w-4 h-4" />
@@ -783,7 +807,7 @@ export const StageMode: React.FC<StageModeProps> = ({
           <div className="w-full max-w-md h-full bg-neutral-950 border-l border-neutral-800 flex flex-col p-6 pt-[max(1.5rem,env(safe-area-inset-top))] pb-[max(1.5rem,env(safe-area-inset-bottom))] shadow-2xl">
             <div className="flex items-center justify-between pb-4 border-b border-neutral-800">
               <div>
-                <h2 className="text-lg font-bold text-white rainbow-text">{setlist.name}</h2>
+                <h2 className="text-lg font-bold text-white">{setlist.name}</h2>
                 <p className="text-xs text-neutral-400">{songItems.length} items in set</p>
               </div>
               <button
@@ -827,7 +851,7 @@ export const StageMode: React.FC<StageModeProps> = ({
                     }}
                     className={`touch-target w-full text-left p-3.5 rounded-2xl border transition-all flex items-center justify-between ${
                       isSelected 
-                        ? 'rainbow-bg text-white shadow-xl border-transparent' 
+                        ? 'bg-blue-600 text-white shadow-xl shadow-blue-500/25 border-transparent' 
                         : 'bg-neutral-900/60 border-neutral-800 text-neutral-300 hover:bg-neutral-900'
                     }`}
                   >

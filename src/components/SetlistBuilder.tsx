@@ -330,7 +330,7 @@ export const SetlistBuilder: React.FC<SetlistBuilderProps> = ({
                 <button
                   type="button"
                   onClick={() => setIsSongPoolOpen(true)}
-                  className="mt-4 px-5 py-2.5 rounded-xl rainbow-bg text-white font-bold text-xs"
+                  className="mt-4 px-5 py-2.5 rounded-xl bg-blue-600 text-white font-bold text-xs shadow-md shadow-blue-500/25"
                 >
                   Pick Songs from Library
                 </button>
@@ -410,7 +410,7 @@ export const SetlistBuilder: React.FC<SetlistBuilderProps> = ({
                             {song?.title || item.customTitle || 'Unknown Song'}
                           </h4>
                           {song && (
-                            <span className="px-1.5 py-0.5 rounded text-[10px] font-stage-mono font-black rainbow-chord bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800">
+                            <span className="px-1.5 py-0.5 rounded text-[10px] font-stage-mono font-black text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800/50">
                               {song.originalKey}
                             </span>
                           )}
@@ -528,7 +528,7 @@ export const SetlistBuilder: React.FC<SetlistBuilderProps> = ({
                       <div className="flex items-center gap-2 text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">
                         <span>{song.artist}</span>
                         <span>•</span>
-                        <span className="font-stage-mono font-black rainbow-chord">{song.originalKey}</span>
+                        <span className="font-stage-mono font-black text-blue-600 dark:text-blue-400">{song.originalKey}</span>
                         <span>•</span>
                         <span>{song.tuning}</span>
                         <span>•</span>
@@ -538,7 +538,7 @@ export const SetlistBuilder: React.FC<SetlistBuilderProps> = ({
                     <button
                       type="button"
                       onClick={() => addSongToSetlist(song)}
-                      className="touch-target flex items-center gap-1 px-3.5 py-1.5 rounded-lg rainbow-bg text-white font-bold text-xs shadow active:scale-95 transition-all"
+                      className="touch-target flex items-center gap-1 px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-md shadow-blue-500/25 active:scale-95 transition-all"
                     >
                       <Plus className="w-4 h-4" />
                       <span>Add</span>
@@ -674,7 +674,7 @@ export const SetlistBuilder: React.FC<SetlistBuilderProps> = ({
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2.5 rounded-xl rainbow-bg text-white font-bold text-xs shadow-md"
+                  className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-md shadow-blue-500/25"
                 >
                   Create Setlist
                 </button>
