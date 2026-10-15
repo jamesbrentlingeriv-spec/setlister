@@ -59,28 +59,15 @@
 
 ## 🎵 Preloaded Realistic Demo Content
 
-Upon first launch, Setlister automatically seeds with 4 realistic demo songs and 2 multi-track setlists:
+Upon first launch, Setlister automatically seeds with a classic stage-ready demo track and setlist:
 
-1. **"Midnight Highway"** (Original):
-   - Tuning: `Drop D` | Key: `Dm` | BPM: `120` | Duration: `3:45` | Default Speed: `1.5x`
-   - Gear Tags: `Original`, `Drop D`, `Distortion`, `Lead Vox`, `Rock`
-   - Features heavy intro riffs, verses, bridge, and solo cues.
-2. **"Hotel California"** (Cover - Eagles):
+1. **"Hotel California"** (Cover - Eagles):
    - Tuning: `Standard (EADGBE)` | Key: `Bm` | Capo: `7` | BPM: `75` | Duration: `6:30` | Default Speed: `0.5x`
-   - Gear Tags: `Cover`, `Acoustic`, `12-String`, `Dual Guitar Solo`
+   - Gear Tags: `Cover`, `Acoustic`, `12-String`, `Dual Guitar Solo`, `Classic Rock`
    - Features classic acoustic intro, complete verses, choruses, and dual solo outro.
-3. **"Superstition"** (Cover - Stevie Wonder):
-   - Tuning: `Eb Standard` | Key: `Ebm` | BPM: `100` | Duration: `4:25` | Default Speed: `2.0x`
-   - Gear Tags: `Cover`, `Clavinet Funk`, `Eb Tuning`, `High Energy`
-   - Features funk syncopation, clavinet chords, and horn breakdown.
-4. **"Neon Horizons"** (Original):
-   - Tuning: `DADGAD` | Key: `D` | Capo: `2` | BPM: `95` | Duration: `4:10` | Default Speed: `1.0x`
-   - Gear Tags: `Original`, `DADGAD`, `Ambient Reverb`, `Fingerpicking`, `Synth Pad`
-   - Features open drone chords and ambient ballad progression.
 
-**Sample Setlists**:
-- **"Set 1 - Main Show"**: Midnight Highway ➔ Neon Horizons ➔ 15 Min Intermission ➔ Hotel California.
-- **"Set 2 - Acoustic & Encore"**: Hotel California ➔ Superstition ➔ Midnight Highway (Extended Solo).
+**Sample Setlist**:
+- **"Set 1 - Acoustic Classics"**: Hotel California.
 
 ---
 

@@ -301,7 +301,7 @@ export const SongEditorModal: React.FC<SongEditorModalProps> = ({
                 required
                 value={title}
                 onChange={e => setTitle(e.target.value)}
-                placeholder="e.g. Midnight Highway"
+                placeholder="e.g. Hotel California"
                 className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 dark:border-neutral-800 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium"
               />
             </div>

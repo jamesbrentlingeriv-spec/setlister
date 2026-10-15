@@ -33,9 +33,11 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Brand & Stage App Title with Electric Blue Accent */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3 cursor-pointer select-none" onClick={() => onSelectTab('library')}>
-            <div className="w-10 h-10 rounded-2xl bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/25">
-              <span className="font-stage-mono font-black text-white text-xl">S</span>
-            </div>
+            <img 
+              src="/logo.png" 
+              alt="Setlister" 
+              className="w-10 h-10 rounded-xl object-cover shadow-md shadow-blue-500/20 bg-black border border-neutral-800" 
+            />
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-xl font-black tracking-tight text-neutral-900 dark:text-white">
@@ -150,7 +152,7 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={onToggleWakeLock}
             className={`touch-target flex items-center gap-2 px-3.5 py-2 rounded-xl border text-xs font-bold transition-all ${
               wakeLockActive 
-                ? 'rainbow-bg text-white border-transparent shadow-md' 
+                ? 'bg-blue-600 text-white border-transparent shadow-md shadow-blue-500/25' 
                 : 'bg-neutral-100 dark:bg-neutral-900 border-neutral-300 dark:border-neutral-800 text-neutral-500 hover:text-neutral-700'
             }`}
             title="Keep screen active during rehearsals and live performances"
@@ -172,7 +174,7 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             type="button"
             onClick={toggleTheme}
-            className="touch-target flex items-center gap-2 px-3.5 py-2 rounded-xl border border-neutral-300 dark:border-neutral-800 bg-neutral-100 dark:bg-neutral-900 text-xs font-bold text-neutral-800 dark:text-neutral-200 hover:border-pink-500 active:scale-95 transition-all"
+            className="touch-target flex items-center gap-2 px-3.5 py-2 rounded-xl border border-neutral-300 dark:border-neutral-800 bg-neutral-100 dark:bg-neutral-900 text-xs font-bold text-neutral-800 dark:text-neutral-200 hover:border-blue-500 active:scale-95 transition-all"
             title="Switch between AMOLED Pure Black and Stark White daylight themes"
           >
             {theme === 'dark' ? (
@@ -182,7 +184,7 @@ export const Header: React.FC<HeaderProps> = ({
               </>
             ) : (
               <>
-                <Moon className="w-4 h-4 text-purple-600" />
+                <Moon className="w-4 h-4 text-blue-600" />
                 <span>Daylight White</span>
               </>
             )}
