@@ -1,0 +1,148 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --bg-main: #ffffff;
+    --bg-card: #ffffff;
+    --bg-card-subtle: #f9fafb;
+    --border-color: #e5e7eb;
+    --text-primary: #000000;
+    --text-secondary: #4b5563;
+  }
+
+  html.dark, :root.dark {
+    --bg-main: #000000;
+    --bg-card: #0c0c0c;
+    --bg-card-subtle: #141414;
+    --border-color: #222222;
+    --text-primary: #ffffff;
+    --text-secondary: #9ca3af;
+  }
+
+  * {
+    -webkit-tap-highlight-color: transparent;
+    box-sizing: border-box;
+  }
+
+  html {
+    height: 100%;
+    min-height: 100dvh;
+  }
+
+  body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    min-height: 100dvh;
+    overflow-x: hidden;
+    touch-action: manipulation;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+}
+
+/* Stage-Ready Touch Target Minimum Standard (48px) */
+.touch-target {
+  min-height: 48px;
+  min-width: 48px;
+}
+
+/* Custom scrollbar for distraction-free view */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(120, 120, 120, 0.3);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(120, 120, 120, 0.6);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Monospace chord / lyrics styling */
+.font-stage-mono {
+  font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* Electric Stage Blue Accent System */
+.accent-blue {
+  background-color: #2563eb;
+  color: #ffffff;
+}
+
+.accent-blue:hover {
+  background-color: #1d4ed8;
+}
+
+.stage-chord {
+  color: #2563eb;
+  font-weight: 800;
+}
+
+html.dark .stage-chord, :root.dark .stage-chord {
+  color: #60a5fa;
+  text-shadow: 0 0 12px rgba(96, 165, 250, 0.35);
+}
+
+/* Blue Accent Gradients & Badges */
+.rainbow-bg, .accent-gradient {
+  background: linear-gradient(135deg, #1e40af, #2563eb, #3b82f6);
+}
+
+.rainbow-bg-subtle {
+  background: rgba(37, 99, 235, 0.12);
+}
+
+.rainbow-text {
+  color: #2563eb;
+  font-weight: 800;
+}
+html.dark .rainbow-text, :root.dark .rainbow-text {
+  color: #60a5fa;
+  font-weight: 800;
+}
+
+.rainbow-chord {
+  color: #2563eb;
+  font-weight: 800;
+}
+html.dark .rainbow-chord, :root.dark .rainbow-chord {
+  color: #60a5fa;
+  font-weight: 800;
+  text-shadow: 0 0 12px rgba(96, 165, 250, 0.35);
+}
+
+.rainbow-border-glow {
+  box-shadow: 0 0 0 2px #3b82f6;
+}
+
+/* Robust Safe Area Padding for Mobile Phones (Notches & Gesture Nav) */
+.safe-top {
+  padding-top: max(2.5rem, calc(env(safe-area-inset-top, 0px) + 0.75rem));
+}
+
+.safe-bottom {
+  padding-bottom: max(3.5rem, calc(env(safe-area-inset-bottom, 0px) + 1.25rem));
+}
+
+.safe-inset {
+  padding-top: max(2.5rem, calc(env(safe-area-inset-top, 0px) + 0.75rem));
+  padding-bottom: max(3.5rem, calc(env(safe-area-inset-bottom, 0px) + 1.25rem));
+  padding-left: max(1rem, env(safe-area-inset-left, 0px));
+  padding-right: max(1rem, env(safe-area-inset-right, 0px));
+}
